@@ -2,47 +2,49 @@ import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 // Layouts
-import { PublicLayout } from '../components/layout/PublicLayout';
-import { DashboardLayout } from '../components/layout/DashboardLayout';
+import { PublicLayout } from '@/src/shared/components/layout/PublicLayout';
+import { DashboardLayout } from '@/src/shared/components/layout/DashboardLayout';
 
-// Public Pages
-import { Home } from '../pages/public/Home';
-import { ProductList } from '../pages/public/ProductList';
-import { ProductDetail } from '../pages/public/ProductDetail';
-import { FarmList } from '../pages/public/FarmList';
-import { FarmDetail } from '../pages/public/FarmDetail';
-import { Traceability } from '../pages/public/Traceability';
-import { Login } from '../pages/public/Login';
-import { Register } from '../pages/public/Register';
+// Auth Pages
+import { Login } from '@/src/modules/auth/pages/Login';
+import { Register } from '@/src/modules/auth/pages/Register';
+import { Profile } from '@/src/modules/auth/pages/Profile';
 
-// Buyer Pages
-import { Cart } from '../pages/buyer/Cart';
-import { Checkout } from '../pages/buyer/Checkout';
-import { MyOrders } from '../pages/buyer/MyOrders';
-import { OrderDetail as BuyerOrderDetail } from '../pages/buyer/OrderDetail';
+// Catalog Pages
+import { Home } from '@/src/modules/catalog/pages/Home';
+import { ProductList } from '@/src/modules/catalog/pages/ProductList';
+import { ProductDetail } from '@/src/modules/catalog/pages/ProductDetail';
+import { FarmList } from '@/src/modules/catalog/pages/FarmList';
+import { FarmDetail } from '@/src/modules/catalog/pages/FarmDetail';
+import { Traceability } from '@/src/modules/catalog/pages/Traceability';
+
+// Cart Pages
+import { Cart } from '@/src/modules/cart/pages/Cart';
+
+// Orders Pages
+import { Checkout } from '@/src/modules/orders/pages/Checkout';
+import { MyOrders } from '@/src/modules/orders/pages/MyOrders';
+import { OrderDetail as BuyerOrderDetail } from '@/src/modules/orders/pages/OrderDetail';
 
 // Seller Pages
-import { SellerDashboard } from '../pages/seller/Dashboard';
-import { SellerProductList } from '../pages/seller/ProductList';
-import { CreateEditProduct } from '../pages/seller/CreateEditProduct';
-import { SellerProductDetail } from '../pages/seller/SellerProductDetail';
-import { SellerOrders } from '../pages/seller/Orders';
-import { SellerOrderDetail } from '../pages/seller/OrderDetail';
+import { SellerDashboard } from '@/src/modules/seller/pages/Dashboard';
+import { SellerProductList } from '@/src/modules/seller/pages/ProductList';
+import { CreateEditProduct } from '@/src/modules/seller/pages/CreateEditProduct';
+import { SellerProductDetail } from '@/src/modules/seller/pages/SellerProductDetail';
+import { SellerOrders } from '@/src/modules/seller/pages/Orders';
+import { SellerOrderDetail } from '@/src/modules/seller/pages/OrderDetail';
 
 // Admin Pages
-import { AdminDashboard } from '../pages/admin/Dashboard';
-import { AdminProducts } from '../pages/admin/Products';
-import { AdminUsers } from '../pages/admin/Users';
-
-// Shared Pages
-import { Profile } from '../pages/shared/Profile';
+import { AdminDashboard } from '@/src/modules/admin/pages/Dashboard';
+import { AdminProducts } from '@/src/modules/admin/pages/Products';
+import { AdminUsers } from '@/src/modules/admin/pages/Users';
 
 // Auth Guard (Mock)
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/src/modules/auth/store';
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles?: string[] }) => {
   const { isAuthenticated, user } = useAuthStore();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
@@ -68,17 +70,17 @@ export const router = createBrowserRouter([
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       { path: 'cart', element: <Cart /> },
-      { 
-        path: 'checkout', 
-        element: <ProtectedRoute><Checkout /></ProtectedRoute> 
+      {
+        path: 'checkout',
+        element: <ProtectedRoute><Checkout /></ProtectedRoute>
       },
-      { 
-        path: 'orders', 
-        element: <ProtectedRoute><MyOrders /></ProtectedRoute> 
+      {
+        path: 'orders',
+        element: <ProtectedRoute><MyOrders /></ProtectedRoute>
       },
-      { 
-        path: 'orders/:id', 
-        element: <ProtectedRoute><BuyerOrderDetail /></ProtectedRoute> 
+      {
+        path: 'orders/:id',
+        element: <ProtectedRoute><BuyerOrderDetail /></ProtectedRoute>
       },
       {
         path: 'profile',
